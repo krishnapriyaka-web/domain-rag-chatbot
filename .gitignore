@@ -1,0 +1,28 @@
+# Environment Variables and Secret Keys
+.env
+.env.*
+!.env.example
+.streamlit/secrets.toml
+
+# Python Cache & Bytecode
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# User Logs & Feedback
+user_feedback.csv
+*.log
+
+# OS Metadata
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
