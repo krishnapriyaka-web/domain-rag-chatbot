@@ -4,11 +4,9 @@
 [![Streamlit](https://img.shields.io/badge/Streamlit-1.30+-FF4B4B?style=for-the-badge&logo=streamlit&logoColor=white)](https://streamlit.io/)
 [![LangChain](https://img.shields.io/badge/LangChain-Enabled-1C3C3C?style=for-the-badge)](https://www.langchain.com/)
 [![FAISS](https://img.shields.io/badge/Vector_DB-FAISS-008080?style=for-the-badge)](https://github.com/facebookresearch/faiss)
-[![License](https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge)](LICENSE)
 
 An enterprise-ready **Retrieval-Augmented Generation (RAG) Chatbot** designed to ingest, process, index, and accurately answer user queries from complex multi-page PDF documents (such as corporate policy manuals, employee handbooks, and codes of conduct). The system enforces strict prompt guardrails, displays page-level source citations, refuses to hallucinate facts outside the uploaded context, and includes interactive feedback buttons for continuous quality evaluation.
 
----
 
 ## Features
 
@@ -22,7 +20,6 @@ An enterprise-ready **Retrieval-Augmented Generation (RAG) Chatbot** designed to
 - **User Feedback Loop**: Interactive 👍 Useful / 👎 Incorrect feedback buttons logging evaluation data to `user_feedback.csv`.
 - **Multi-LLM & Offline Fallback Support**: Compatible with Groq (Llama 3.1 70B), OpenAI (GPT-4o-mini), Google Gemini (Gemini 1.5 Flash), and a deterministic offline grounded extractor.
 
----
 
 ## Architecture & Workflow
 
@@ -43,8 +40,6 @@ flowchart TD
     L -- No --> N[Return Standard Refusal Message]
     M --> O[User Feedback Buttons: Useful / Incorrect]
 ```
-
----
 
 ## Project Structure
 
@@ -75,7 +70,6 @@ domain_rag_chatbot/
     |-- test_questions.csv   # Evaluation dataset
 ```
 
----
 
 ## Getting Started
 
@@ -117,7 +111,6 @@ domain_rag_chatbot/
    ```
    Open `.env` and set your preferred provider key (e.g., `GROQ_API_KEY`, `OPENAI_API_KEY`, or `GEMINI_API_KEY`). If omitted, the application runs offline using the built-in grounded extractive engine.
 
----
 
 ## Usage
 
@@ -139,7 +132,6 @@ Open your browser at `http://localhost:8501`.
 4. Expand **📄 View Sources** beneath any answer to verify the retrieved excerpts and page numbers.
 5. Rate responses with **👍 Useful** or **👎 Incorrect** to log feedback.
 
----
 
 ## Testing & Evaluation
 
@@ -160,7 +152,6 @@ python run_tests.py
 | **Prompt Injection Defense** | Neutralize adversarial input | **100.0%** | **PASS** |
 | **Average Response Latency** | < 2.0s | **0.0016s** (Offline) / **0.8s** (Groq) | **PASS** |
 
----
 
 ## Deployment
 
@@ -188,8 +179,3 @@ docker build -t domain-rag-chatbot .
 docker run -p 8501:8501 --env-file .env domain-rag-chatbot
 ```
 
----
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
