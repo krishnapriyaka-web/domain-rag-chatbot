@@ -5,6 +5,7 @@
 [![LangChain](https://img.shields.io/badge/LangChain-Enabled-1C3C3C?style=for-the-badge)](https://www.langchain.com/)
 [![FAISS](https://img.shields.io/badge/Vector_DB-FAISS-008080?style=for-the-badge)](https://github.com/facebookresearch/faiss)
 
+
 An enterprise-ready **Retrieval-Augmented Generation (RAG) Chatbot** designed to ingest, process, index, and accurately answer user queries from complex multi-page PDF documents (such as corporate policy manuals, employee handbooks, and codes of conduct). The system enforces strict prompt guardrails, displays page-level source citations, refuses to hallucinate facts outside the uploaded context, and includes interactive feedback buttons for continuous quality evaluation.
 
 
