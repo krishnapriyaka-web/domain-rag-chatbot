@@ -47,30 +47,81 @@ st.markdown("""
     .main-title {
         font-size: 2.2rem;
         font-weight: 700;
-        color: #1E3A8A;
+        color: var(--text-color, #1E3A8A);
         margin-bottom: 0.2rem;
     }
     .sub-title {
         font-size: 1.05rem;
-        color: #4B5563;
+        color: var(--text-color, #4B5563);
+        opacity: 0.85;
         margin-bottom: 1.2rem;
     }
     .disclaimer-box {
-        background-color: #FEF3C7;
+        background-color: rgba(245, 158, 11, 0.15);
         border-left: 5px solid #F59E0B;
         padding: 0.8rem 1.2rem;
-        border-radius: 4px;
-        color: #92400E;
+        border-radius: 6px;
+        color: var(--text-color, #92400E);
         font-size: 0.92rem;
         margin-bottom: 1.5rem;
     }
+    .source-card {
+        background-color: var(--secondary-background-color, rgba(128, 128, 128, 0.15));
+        border: 1px solid rgba(128, 128, 128, 0.25);
+        border-left: 4px solid #3B82F6;
+        border-radius: 8px;
+        padding: 0.85rem 1.1rem;
+        margin-top: 0.6rem;
+        margin-bottom: 0.85rem;
+    }
+    .source-header {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-bottom: 0.45rem;
+        font-size: 0.9rem;
+    }
+    .source-badge {
+        background-color: #3B82F6;
+        color: #FFFFFF !important;
+        font-weight: 700;
+        font-size: 0.75rem;
+        padding: 0.2rem 0.55rem;
+        border-radius: 4px;
+        letter-spacing: 0.03em;
+        text-transform: uppercase;
+    }
+    .source-doc {
+        font-family: monospace;
+        font-size: 0.88rem;
+        color: var(--text-color, inherit);
+    }
+    .source-page {
+        background-color: rgba(128, 128, 128, 0.2);
+        color: var(--text-color, inherit);
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.15rem 0.5rem;
+        border-radius: 4px;
+    }
+    .source-content {
+        color: var(--text-color, inherit);
+        font-size: 0.9rem;
+        line-height: 1.55;
+        font-style: italic;
+        opacity: 0.95;
+    }
     .source-box {
-        background-color: #F3F4F6;
+        background-color: var(--secondary-background-color, rgba(128, 128, 128, 0.15));
+        color: var(--text-color, inherit);
         border-radius: 6px;
-        padding: 0.6rem 0.9rem;
-        margin-top: 0.5rem;
-        font-size: 0.85rem;
-        border: 1px solid #E5E7EB;
+        padding: 0.75rem 1rem;
+        margin-top: 0.4rem;
+        font-size: 0.88rem;
+        line-height: 1.55;
+        border: 1px solid rgba(128, 128, 128, 0.25);
+        border-left: 4px solid #3B82F6;
     }
     .feedback-status {
         font-size: 0.85rem;
@@ -233,9 +284,18 @@ for idx, msg in enumerate(st.session_state.messages):
         if msg["role"] == "assistant" and msg.get("sources"):
             with st.expander(f"📄 View Sources ({len(msg['sources'])} retrieved citations)", expanded=False):
                 for s_idx, src in enumerate(msg["sources"], 1):
-                    st.markdown(f"**Source {s_idx}:** `{src['document']}` | **Page {src['page']}**")
-                    st.markdown(f'<div class="source-box">"...{src["snippet"]}..."</div>', unsafe_allow_html=True)
-                    st.markdown("")
+                    snippet_text = src.get("snippet", "").strip()
+                    source_html = (
+                        f'<div class="source-card">'
+                        f'<div class="source-header">'
+                        f'<span class="source-badge">Source {s_idx}</span>'
+                        f'<span class="source-doc">📄 <strong>{src["document"]}</strong></span>'
+                        f'<span class="source-page">📍 Page {src["page"]}</span>'
+                        f'</div>'
+                        f'<div class="source-content">"...{snippet_text}..."</div>'
+                        f'</div>'
+                    )
+                    st.markdown(source_html, unsafe_allow_html=True)
 
         if msg["role"] == "assistant":
             msg_key = f"msg_{idx}"
@@ -244,7 +304,7 @@ for idx, msg in enumerate(st.session_state.messages):
             if current_feedback:
                 st.markdown(f'<span class="feedback-status">Feedback recorded: {current_feedback}</span>', unsafe_allow_html=True)
             else:
-                f_col1, f_col2, f_col3 = st.columns([1, 1, 8])
+                f_col1, f_col2, _ = st.columns([1.5, 1.8, 6.7])
                 with f_col1:
                     if st.button("👍 Useful", key=f"thumb_up_{idx}"):
                         st.session_state.feedback_records[msg_key] = "Useful"
